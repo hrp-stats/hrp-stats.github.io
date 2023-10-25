@@ -1,32 +1,30 @@
 # Packed to the Brim: Analyzing Highly Responsive Prefixes on the Internet
 
-Authors: Anonymous Authors
+Authors: Patrick Sattler, Johannes Zirngibl, Mattijs Jonker, Oliver Gasser, Georg Carle, and Ralph Holz
+
+Accepted at ACM CoNEXT 2023 published in the Proceedings of ACM Networking - https://doi.org/10.1145/3629146
 
 ## Abstract
 
-Internet-wide scans are an important tool to evaluate the deployment of
-services.  To enable large-scale application layer scans, usually, a
-fast, stateless port scan (e.g., using ZMap) is performed ahead of time to
-collect responsive targets.  It is commonly expected that port scans on
-the entire IPv4 address space provide a relatively unbiased view, as
-they cover the complete address space.
-Previous work, however, has found that there are prefixes where all addresses share very specific properties.
-In IPv6 aliased prefixes and fully responsive prefixes, i.e., prefixes where all addresses are responsive, are well-known and studied.
-To our knowledge there is no such in-depth analysis for prefixes sharing these properties in IPv4.
+Internet-wide scans are an important tool to evaluate the deployment of services.
+To enable large-scale application layer scans, a fast, stateless port scan (e.g., using ZMap) is often performed ahead of time to collect responsive targets.
+It is a common expectation that port scans on the entire IPv4 address space provide a relatively unbiased view as they cover the complete address space.
+Previous work, however, has found prefixes where all addresses share particular properties.
+In IPv6, aliased prefixes and fully responsive prefixes, i.e., prefixes where all addresses are responsive, are a well-known phenomenon.
+However, there is no such in-depth analysis for prefixes with these responsiveness patterns in IPv4.
 
-This paper delves into the underlying factors of this phenomenon in the context of IPv4 and evaluates port scans on a total of 161 ports
-(142 TCP & 19 UDP ports) from three different vantage points.
-To account for packet loss and other scanning artifacts, we establish a new category of prefixes, i.e., HRPs.  Our findings show that
-the share of HRPs can make up 70% of responsive addresses on selected ports.
+This paper delves into the underlying factors of this phenomenon in the context of IPv4 and evaluates port scans on a total of 161 ports (142 TCP & 19 UDP ports) from three different vantage points.
+To account for packet loss and other scanning artifacts, we propose the notion of a new category of prefixes, which we call highly responsive prefixes (HRPs).
+Our findings show that the share of HRPs can make up 70 % of responsive addresses on selected ports.
 Regarding specific ports, we observe that CDNs contribute to the largest fraction of HRPs on TCP/80 and TCP/443, while TCP proxies emerge as the primary cause of HRPs on other ports.
-To improve future scanning campaigns conducted by the research community, we make our study's data publicly available and provide a tool for detecting HRPs.
-Furthermore, we propose an approach towards a more efficient, ethical, and sustainable
-application layer target selection.
-Through our evaluation, we demonstrate that our approach has the potential to reduce application layer requests by up to 75% while successfully obtaining 99% of all unique certificates.
+Our analysis also reveals that application layer handshakes to targets outside HRPs are, depending on the chosen service, up to three times more likely to be successful compared to handshakes with targets located in HRPs.
+To improve future scanning campaigns conducted by the research community, we make our study’s data publicly available and provide a tool for detecting HRPs.
+Furthermore, we propose an approach for a more efficient, ethical, and sustainable application layer target selection.
+We demonstrate that our approach has the potential to reduce the number of TLS handshakes by up to 75 % during an Internet-wide scan while successfully obtaining 99 % of all unique certificates.
 
 ## HRP Analysis Tool
 
-The [tool]({{site.url}}/search-for-hrps.py) provides the following parameters:
+The [tool]({{site.url}}/search-for-hrps.py) to search for highly responsive prefixes inside port scans provides the following parameters:
 
 ```
 usage: Parse zmap output and return high responsive prefix information [-h]
@@ -52,7 +50,8 @@ options:
                         Set this flag if headers are included
 ```
 
-The input file must only contain IP addresses and be sorted by the addresses. You can use the following command to feed your unsorted zmap file to our tool:
+The input file must only contain IP addresses and be sorted by the addresses.
+We provided an exemplary command which can be used to feed your unsorted zmap file to our tool:
 
 ```
 cut -d, -f ${ip_address_column} ${zmap_file} | \
@@ -66,7 +65,7 @@ cut -d, -f ${ip_address_column} ${zmap_file} | \
 The pyasn file as well as scan port, date, and location are optional parameters.
 Omit the `tail -n +2` part if your file does not contain a header.
 You can also omit the tee command if you do not need the intermediate sorted file.
-This intermediate file can also be used directly by the python script as input_file.
+This intermediate file can also be used directly by the python script as input file.
 
 ## Highly Responsive Prefixes (HRPs)
 
@@ -139,6 +138,8 @@ Port scan by Rapid7
 
 ## Raw Data
 
-TBD
+TBD will be published
 
-Our own scan data and all results will be published when the double-blind restrictions are lifted and an appropriate media server can be used to publish our data.
+## Contact
+
+- [Patrick Sattler](https://www.net.in.tum.de/members/sattler) **sattler** [at] **net.in.tum.de**

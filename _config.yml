@@ -1,6 +1,6 @@
 remote_theme: pages-themes/slate@v0.2.0
 title: "Packed to the Brim: Analyzing Highly Responsive Prefixes on the Internet"
-author: "Anonymous Authors"
+author: "Patrick Sattler, Johannes Zirngibl, Mattijs Jonker, Oliver Gasser, Georg Carle, and Ralph Holz"
 plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
