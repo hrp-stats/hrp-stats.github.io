@@ -50,6 +50,8 @@ options:
                         Set this flag if headers are included
 ```
 
+The Python module requirements can be installed using `pip install -r requirements.txt`.
+
 The input file must only contain IP addresses and be sorted by the addresses.
 We provided an exemplary command which can be used to feed your unsorted zmap file to our tool:
 
