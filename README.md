@@ -2,25 +2,9 @@
 
 Authors: Patrick Sattler, Johannes Zirngibl, Mattijs Jonker, Oliver Gasser, Georg Carle, and Ralph Holz
 
-Accepted at ACM CoNEXT 2023 published in the Proceedings of ACM Networking - https://doi.org/10.1145/3629146
+Published in the Proceedings of ACM Networking (CoNEXT3) - https://doi.org/10.1145/3629146
 
-## Abstract
-
-Internet-wide scans are an important tool to evaluate the deployment of services.
-To enable large-scale application layer scans, a fast, stateless port scan (e.g., using ZMap) is often performed ahead of time to collect responsive targets.
-It is a common expectation that port scans on the entire IPv4 address space provide a relatively unbiased view as they cover the complete address space.
-Previous work, however, has found prefixes where all addresses share particular properties.
-In IPv6, aliased prefixes and fully responsive prefixes, i.e., prefixes where all addresses are responsive, are a well-known phenomenon.
-However, there is no such in-depth analysis for prefixes with these responsiveness patterns in IPv4.
-
-This paper delves into the underlying factors of this phenomenon in the context of IPv4 and evaluates port scans on a total of 161 ports (142 TCP & 19 UDP ports) from three different vantage points.
-To account for packet loss and other scanning artifacts, we propose the notion of a new category of prefixes, which we call highly responsive prefixes (HRPs).
-Our findings show that the share of HRPs can make up 70 % of responsive addresses on selected ports.
-Regarding specific ports, we observe that CDNs contribute to the largest fraction of HRPs on TCP/80 and TCP/443, while TCP proxies emerge as the primary cause of HRPs on other ports.
-Our analysis also reveals that application layer handshakes to targets outside HRPs are, depending on the chosen service, up to three times more likely to be successful compared to handshakes with targets located in HRPs.
-To improve future scanning campaigns conducted by the research community, we make our study’s data publicly available and provide a tool for detecting HRPs.
-Furthermore, we propose an approach for a more efficient, ethical, and sustainable application layer target selection.
-We demonstrate that our approach has the potential to reduce the number of TLS handshakes by up to 75 % during an Internet-wide scan while successfully obtaining 99 % of all unique certificates.
+You can either use our [tool](#hrp-analysis-tool) or download the latest HRPs with our [utility.](#utilities)
 
 ## HRP Analysis Tool
 
@@ -69,6 +53,20 @@ Omit the `tail -n +2` part if your file does not contain a header.
 You can also omit the tee command if you do not need the intermediate sorted file.
 This intermediate file can also be used directly by the python script as input file.
 
+## Utilities
+
+The [get-hrps.py]({{site.url}}/get-hrps.py) script can download the latest port 80 and 443 HRPs for your convenience.
+
+```
+usage: Downloads latest HRP file (by default port 443 can be changed with http flag [-h] [--http] -o OUTPUT_DIR
+
+options:
+  -h, --help            show this help message and exit
+  --http                Download port 80 HRPs
+  -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+                        Output directory
+```
+
 ## Highly Responsive Prefixes (HRPs)
 
 We provide weekly data on HRPs for ports 80 and 443 up until January 2023:
@@ -77,10 +75,31 @@ We provide weekly data on HRPs for ports 80 and 443 up until January 2023:
 - [Port 443 HRPs](https://github.com/hrp-stats/hrp-stats.github.io/tree/main/hrps/443)
 
 A continuously updated service will be provided when anonymity is lifted.
+Our [get-hrps](#utilities) utility uses these directories as source
+
+
+## Abstract
+
+Internet-wide scans are an important tool to evaluate the deployment of services.
+To enable large-scale application layer scans, a fast, stateless port scan (e.g., using ZMap) is often performed ahead of time to collect responsive targets.
+It is a common expectation that port scans on the entire IPv4 address space provide a relatively unbiased view as they cover the complete address space.
+Previous work, however, has found prefixes where all addresses share particular properties.
+In IPv6, aliased prefixes and fully responsive prefixes, i.e., prefixes where all addresses are responsive, are a well-known phenomenon.
+However, there is no such in-depth analysis for prefixes with these responsiveness patterns in IPv4.
+
+This paper delves into the underlying factors of this phenomenon in the context of IPv4 and evaluates port scans on a total of 161 ports (142 TCP & 19 UDP ports) from three different vantage points.
+To account for packet loss and other scanning artifacts, we propose the notion of a new category of prefixes, which we call highly responsive prefixes (HRPs).
+Our findings show that the share of HRPs can make up 70 % of responsive addresses on selected ports.
+Regarding specific ports, we observe that CDNs contribute to the largest fraction of HRPs on TCP/80 and TCP/443, while TCP proxies emerge as the primary cause of HRPs on other ports.
+Our analysis also reveals that application layer handshakes to targets outside HRPs are, depending on the chosen service, up to three times more likely to be successful compared to handshakes with targets located in HRPs.
+To improve future scanning campaigns conducted by the research community, we make our study’s data publicly available and provide a tool for detecting HRPs.
+Furthermore, we propose an approach for a more efficient, ethical, and sustainable application layer target selection.
+We demonstrate that our approach has the potential to reduce the number of TLS handshakes by up to 75 % during an Internet-wide scan while successfully obtaining 99 % of all unique certificates.
+
 
 ## Hilbert Curves
 
-We also generated hilbert curves for all ports scanned (During August 2022).
+We generated hilbert curves for all ports scanned (During August 2022).
 We provide two variants:
 - All responsive addresses with their denseness
 - Only HRPs are colored
@@ -140,7 +159,7 @@ Port scan by Rapid7
 
 ## Raw Data
 
-TBD will be published
+You can find raw data and statistical exports in our published [archive.](https://mediatum.ub.tum.de/1723389)
 
 ## Contact
 
