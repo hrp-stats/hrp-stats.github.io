@@ -69,7 +69,7 @@ options:
 
 ## Highly Responsive Prefixes (HRPs)
 
-We provide weekly data on HRPs for ports 80 and 443 up until January 2023:
+We provide weekly data on HRPs for ports 80 and 443:
 
 - [Port 80 HRPs](https://github.com/hrp-stats/hrp-stats.github.io/tree/main/hrps/80)
 - [Port 443 HRPs](https://github.com/hrp-stats/hrp-stats.github.io/tree/main/hrps/443)
